@@ -1,3 +1,9 @@
 .idea/
 models/
 __pycache__
+home/
+.ei-block-config
+out/
+data/
+.DS_Store
+
