@@ -5,6 +5,8 @@ import numpy as np
 from PIL import Image, ImageOps
 import os
 
+import binToLabel
+
 def save_image(filename, data_array):
     im = Image.fromarray(data_array.astype('uint8'))
     im_invert = ImageOps.invert(im)
@@ -26,3 +28,11 @@ for li in [x_train, x_test]:
         print(filename)
         save_image(filename, x)
         i += 1
+
+def _test():
+    for i in range(20):
+        filename = str(i)
+        print(filename)
+        print(y_test[i])
+        print(binToLabel.getTestLabel(i, "test"))
+        print()
