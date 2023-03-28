@@ -9,6 +9,9 @@ from torch.utils.data import TensorDataset, DataLoader
 from conversion import convert_to_tf_lite, save_saved_model, pytorch_to_savedmodel
 import tensorflow as tf
 
+from torchvision.datasets import mnist
+from torchvision.transforms import ToTensor
+
 from torch.optim import SGD
 
 # Lower TensorFlow log levels
@@ -42,8 +45,10 @@ Y_test = np.load(os.path.join(args.data_directory, 'Y_split_test.npy'))
 classes = Y_train.shape[1]
 
 MODEL_INPUT_SHAPE = X_train.shape[1:]
+print(type(MODEL_INPUT_SHAPE))
+print(MODEL_INPUT_SHAPE)
 
-# Small pyTorch neural network with 2 hidden layers
+# <<MODIFIED>>
 class Model(Module):
     def __init__(self):
         super(Model, self).__init__()
@@ -84,38 +89,49 @@ criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0.9, 0.999))
 
 # convert to pyTorch float tensors
-X_train = torch.FloatTensor(X_train)
-Y_train = torch.FloatTensor(Y_train)
-X_test = torch.FloatTensor(X_test)
-Y_test = torch.FloatTensor(Y_test)
+# X_train = torch.FloatTensor(X_train)
+# Y_train = torch.FloatTensor(Y_train)
+# X_test = torch.FloatTensor(X_test)
+# Y_test = torch.FloatTensor(Y_test)
 
 # create data loaders
-train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
-test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
+# train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
+# test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
 
-# <<CUSTOMIZED>>
+train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
+test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
+train_dataloader = DataLoader(train_dataset, batch_size=256)
+test_dataloader = DataLoader(test_dataset, batch_size=256)
+
+
+# <<MODIFIED>>
 sgd = SGD(model.parameters(), lr=1e-1)
 
 # training loop
-model.train()
 for epoch in range(args.epochs):
     running_loss = 0.0
     running_loss_count = 0
     running_val_loss = 0.0
     running_val_loss_count = 0
+    
+    # <<MODIFIED>>
+    model.train()
 
     for i, data in enumerate(train_dataloader, 0):
         # get the inputs; data is a list of [inputs, labels]
         inputs, labels = data
 
         # zero the parameter gradients
-        optimizer.zero_grad()
+        sgd.zero_grad()
 
         # forward + backward + optimize
-        outputs = model(inputs)
-        loss = criterion(outputs, labels)
+        outputs = model(inputs.float())
+        # outputs = model(inputs)
+        loss = criterion(outputs, labels.long())
+        # loss = criterion(outputs, labels)
+
         loss.backward()
-        optimizer.step()
+        sgd.step()
 
         running_loss += loss.item()
         running_loss_count = running_loss_count + 1
