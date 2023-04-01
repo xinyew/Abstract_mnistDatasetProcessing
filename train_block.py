@@ -44,9 +44,25 @@ Y_test = np.load(os.path.join(args.data_directory, 'Y_split_test.npy'))
 
 classes = Y_train.shape[1]
 
+d = X_train[0]
+print("EI input np shape: ", end="")
+print(d.shape)
+print(type(d))
+
+XX_train = torch.FloatTensor(X_train)
+d = XX_train[0]
+print("EI input torch shape: ", end="")
+print(d.shape)
+print(type(d))
+# for indexi in range(len(d)):
+#     print("line: " + str(indexi), end=" ")
+#     for indexj in range(len(d[indexi])):
+#         print("{:.3f}".format(d[indexi][indexj][0].item()), end=" ")
+#     print()
+
+# X_train.shape = (40000, 32, 32, 1)
+# Y_train.shape = (40000, 10)
 MODEL_INPUT_SHAPE = X_train.shape[1:]
-print(type(MODEL_INPUT_SHAPE))
-print(MODEL_INPUT_SHAPE)
 
 # <<MODIFIED>>
 class Model(Module):
@@ -100,6 +116,8 @@ optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0
 
 train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
 test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
+print("!!!")
+print(type(test_dataset))
 train_dataloader = DataLoader(train_dataset, batch_size=256)
 test_dataloader = DataLoader(test_dataset, batch_size=256)
 
@@ -116,6 +134,23 @@ for epoch in range(args.epochs):
     
     # <<MODIFIED>>
     model.train()
+
+    d = train_dataset[0]
+    i, l = d
+    print("my data input shape: ", end="")
+    print(i.shape)
+    print(type(i))
+    # for index in range(len(i[0])):
+    #     print("line: " + str(index) + " ", end="")
+    #     for indexj in range(len(i[0][index])):
+    #         print("{:.3f}".format(i[0][index][indexj].item()), end=" ")
+    #     print()
+    d = i.reshape(28,28,1)
+    # for indexi in range(len(d)):
+    #     print("line: " + str(indexi), end=" ")
+    #     for indexj in range(len(d[indexi])):
+    #         print("{:.3f}".format(d[indexi][indexj][0].item()), end=" ")
+    #     print()
 
     for i, data in enumerate(train_dataloader, 0):
         # get the inputs; data is a list of [inputs, labels]

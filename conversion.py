@@ -108,8 +108,16 @@ def save_saved_model(model, out_directory):
     print('Saving saved model OK')
     print('')
 
+# def pytorch_to_savedmodel(pytorch_model, input_shape):
+#     input_np = np.random.uniform(0, 1, tuple([ 1 ]) + input_shape)
+#     input_var = Variable(torch.FloatTensor(input_np))
+
+#     return pytorch_to_keras(pytorch_model, input_var, [input_shape], verbose=True, name_policy='short')
+
 def pytorch_to_savedmodel(pytorch_model, input_shape):
+    # create a np_array of shape (1, <input shape>)
     input_np = np.random.uniform(0, 1, tuple([ 1 ]) + input_shape)
+    # convert the np_array to tensor variable
     input_var = Variable(torch.FloatTensor(input_np))
 
     return pytorch_to_keras(pytorch_model, input_var, [input_shape], verbose=True, name_policy='short')
