@@ -88,7 +88,7 @@ model = Model()
 
 # loss function and optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0.9, 0.999))
+# optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0.9, 0.999))
 
 # convert to pyTorch float tensors
 X_train = torch.FloatTensor(X_train)
@@ -97,8 +97,8 @@ X_test = torch.FloatTensor(X_test)
 Y_test = torch.FloatTensor(Y_test)
 
 # create data loaders
-train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
-test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
+train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=256)
+test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=256)
 
 # <<MODIFIED>>
 sgd = SGD(model.parameters(), lr=1e-1)
@@ -121,8 +121,8 @@ for epoch in range(args.epochs):
         sgd.zero_grad()
 
         # forward + backward + optimize
-        outputs = model(inputs.float())
-        # outputs = model(inputs)
+        # outputs = model(inputs.float())
+        outputs = model(inputs)
         # loss = criterion(outputs, labels.long())
         loss = criterion(outputs, labels)
 
@@ -132,21 +132,22 @@ for epoch in range(args.epochs):
         running_loss += loss.item()
         running_loss_count = running_loss_count + 1
 
-    for i, data in enumerate(test_dataloader, 0):
-        # get the inputs; data is a list of [inputs, labels]
-        inputs, labels = data
+    # for i, data in enumerate(test_dataloader, 0):
+    #     # get the inputs; data is a list of [inputs, labels]
+    #     inputs, labels = data
 
-        # validate output
-        outputs = model(inputs)
-        loss = criterion(outputs, labels)
+    #     # validate output
+    #     outputs = model(inputs)
+    #     loss = criterion(outputs, labels)
 
-        # log validation loss
-        running_val_loss += loss.item()
-        running_val_loss_count = running_loss_count + 1
+    #     # log validation loss
+    #     running_val_loss += loss.item()
+    #     running_val_loss_count = running_loss_count + 1
 
-    print(f'Epoch {epoch + 1}: loss: {running_loss / running_loss_count:.3f}, ' +
-          f'val_loss: {running_val_loss / running_val_loss_count:.3f}')
+    print(f'Epoch {epoch + 1}: loss: {running_loss / running_loss_count:.3f}')
 
+    # print(f'Epoch {epoch + 1}: loss: {running_loss / running_loss_count:.3f}, ' +
+        #   f'val_loss: {running_val_loss / running_val_loss_count:.3f}')
 # calculate accuracy
 model.eval()
 
