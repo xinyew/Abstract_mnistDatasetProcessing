@@ -1,0 +1,574 @@
+Creating job... OK (ID: 7631702)
+
+Scheduling job in cluster...
+Job started
+Scheduling job in cluster...
+Container image pulled!
+Job started
+Splitting data into training and validation sets...
+Splitting data into training and validation sets OK
+Scheduling job in cluster...
+Container image pulled!
+Job started
+2023-04-03 22:28:15.852751: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2023-04-03 22:28:15.852783: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+train.py:94: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at  ../torch/csrc/utils/tensor_numpy.cpp:189.)
+  X_train = torch.FloatTensor(X_train)
+Attached to job 7631702...
+Epoch 1: loss: 2.233
+Attached to job 7631702...
+Epoch 2: loss: 0.887
+Attached to job 7631702...
+Epoch 3: loss: 0.612
+Attached to job 7631702...
+Epoch 4: loss: 0.564
+Attached to job 7631702...
+Epoch 5: loss: 0.538
+Attached to job 7631702...
+Epoch 6: loss: 0.524
+Attached to job 7631702...
+Epoch 7: loss: 0.514
+Attached to job 7631702...
+Epoch 8: loss: 0.502
+Attached to job 7631702...
+Epoch 9: loss: 0.306
+Attached to job 7631702...
+Attached to job 7631702...
+Epoch 10: loss: 0.285
+Attached to job 7631702...
+Attached to job 7631702...
+Epoch 11: loss: 0.276
+Attached to job 7631702...
+Epoch 12: loss: 0.270
+Attached to job 7631702...
+Attached to job 7631702...
+Epoch 13: loss: 0.266
+Attached to job 7631702...
+Attached to job 7631702...
+Epoch 14: loss: 0.262
+Attached to job 7631702...
+Attached to job 7631702...
+Epoch 15: loss: 0.259
+
+Test accuracy: 0.886333
+
+Training network OK
+
+INFO:pytorch2keras:Converter is called.
+WARNING:pytorch2keras:Name policy isn't supported now.
+WARNING:pytorch2keras:Custom shapes isn't supported now.
+DEBUG:pytorch2keras:Input_names:
+DEBUG:pytorch2keras:['input_0']
+DEBUG:pytorch2keras:Output_names:
+DEBUG:pytorch2keras:['output_0']
+graph(%input_0 : Float(1, 1, 28, 28, strides=[784, 784, 28, 1], requires_grad=0, device=cpu),
+      %conv1.weight : Float(6, 1, 5, 5, strides=[25, 25, 5, 1], requires_grad=1, device=cpu),
+      %conv1.bias : Float(6, strides=[1], requires_grad=1, device=cpu),
+      %conv2.weight : Float(16, 6, 5, 5, strides=[150, 25, 5, 1], requires_grad=1, device=cpu),
+      %conv2.bias : Float(16, strides=[1], requires_grad=1, device=cpu),
+      %fc1.weight : Float(120, 256, strides=[256, 1], requires_grad=1, device=cpu),
+      %fc1.bias : Float(120, strides=[1], requires_grad=1, device=cpu),
+      %fc2.weight : Float(84, 120, strides=[120, 1], requires_grad=1, device=cpu),
+      %fc2.bias : Float(84, strides=[1], requires_grad=1, device=cpu),
+      %fc3.weight : Float(10, 84, strides=[84, 1], requires_grad=1, device=cpu),
+      %fc3.bias : Float(10, strides=[1], requires_grad=1, device=cpu)):
+  %11 : Float(1, 6, 24, 24, strides=[3456, 576, 24, 1], requires_grad=1, device=cpu) = onnx::Conv[dilations=[1, 1], group=1, kernel_shape=[5, 5], pads=[0, 0, 0, 0], strides=[1, 1]](%input_0, %conv1.weight, %conv1.bias) # /usr/local/lib/python3.8/dist-packages/torch/nn/modules/conv.py:442:0
+  %12 : Float(1, 6, 24, 24, strides=[3456, 576, 24, 1], requires_grad=1, device=cpu) = onnx::Relu(%11) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1299:0
+  %13 : Float(1, 6, 12, 12, strides=[864, 144, 12, 1], requires_grad=1, device=cpu) = onnx::MaxPool[kernel_shape=[2, 2], pads=[0, 0, 0, 0], strides=[2, 2]](%12) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:719:0
+  %14 : Float(1, 16, 8, 8, strides=[1024, 64, 8, 1], requires_grad=1, device=cpu) = onnx::Conv[dilations=[1, 1], group=1, kernel_shape=[5, 5], pads=[0, 0, 0, 0], strides=[1, 1]](%13, %conv2.weight, %conv2.bias) # /usr/local/lib/python3.8/dist-packages/torch/nn/modules/conv.py:442:0
+  %15 : Float(1, 16, 8, 8, strides=[1024, 64, 8, 1], requires_grad=1, device=cpu) = onnx::Relu(%14) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1299:0
+  %16 : Float(1, 16, 4, 4, strides=[256, 16, 4, 1], requires_grad=1, device=cpu) = onnx::MaxPool[kernel_shape=[2, 2], pads=[0, 0, 0, 0], strides=[2, 2]](%15) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:719:0
+  %17 : Long(requires_grad=0, device=cpu) = onnx::Constant[value={1}]() # train.py:77:0
+  %18 : Long(requires_grad=0, device=cpu) = onnx::Constant[value={-1}]()
+  %19 : Long(1, strides=[1], device=cpu) = onnx::Unsqueeze[axes=[0]](%17)
+  %20 : Long(1, strides=[1], device=cpu) = onnx::Unsqueeze[axes=[0]](%18)
+  %21 : Long(2, strides=[1], device=cpu) = onnx::Concat[axis=0](%19, %20)
+  %22 : Float(1, 256, strides=[256, 1], requires_grad=1, device=cpu) = onnx::Reshape(%16, %21) # train.py:77:0
+  %23 : Float(1, 120, strides=[120, 1], requires_grad=1, device=cpu) = onnx::Gemm[alpha=1., beta=1., transB=1](%22, %fc1.weight, %fc1.bias) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1848:0
+  %24 : Float(1, 120, strides=[120, 1], requires_grad=1, device=cpu) = onnx::Relu(%23) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1299:0
+  %25 : Float(1, 84, strides=[84, 1], requires_grad=1, device=cpu) = onnx::Gemm[alpha=1., beta=1., transB=1](%24, %fc2.weight, %fc2.bias) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1848:0
+  %26 : Float(1, 84, strides=[84, 1], requires_grad=1, device=cpu) = onnx::Relu(%25) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1299:0
+  %27 : Float(1, 10, strides=[10, 1], requires_grad=1, device=cpu) = onnx::Gemm[alpha=1., beta=1., transB=1](%26, %fc3.weight, %fc3.bias) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1848:0
+  %output_0 : Float(1, 10, strides=[10, 1], requires_grad=1, device=cpu) = onnx::Relu(%27) # /usr/local/lib/python3.8/dist-packages/torch/nn/functional.py:1299:0
+  return (%output_0)
+
+INFO:onnx2keras:Converter is called.
+DEBUG:onnx2keras:List input shapes:
+DEBUG:onnx2keras:[(1, 28, 28)]
+DEBUG:onnx2keras:List inputs:
+DEBUG:onnx2keras:Input 0 -> input_0.
+DEBUG:onnx2keras:List outputs:
+DEBUG:onnx2keras:Output 0 -> output_0.
+DEBUG:onnx2keras:Gathering weights to dictionary.
+DEBUG:onnx2keras:Found weight conv1.weight with shape (6, 1, 5, 5).
+DEBUG:onnx2keras:Found weight conv1.bias with shape (6,).
+DEBUG:onnx2keras:Found weight conv2.weight with shape (16, 6, 5, 5).
+DEBUG:onnx2keras:Found weight conv2.bias with shape (16,).
+DEBUG:onnx2keras:Found weight fc1.weight with shape (120, 256).
+DEBUG:onnx2keras:Found weight fc1.bias with shape (120,).
+DEBUG:onnx2keras:Found weight fc2.weight with shape (84, 120).
+DEBUG:onnx2keras:Found weight fc2.bias with shape (84,).
+DEBUG:onnx2keras:Found weight fc3.weight with shape (10, 84).
+DEBUG:onnx2keras:Found weight fc3.bias with shape (10,).
+DEBUG:onnx2keras:Found input input_0 with shape (1, 28, 28)
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Conv
+DEBUG:onnx2keras:node_name: 11
+DEBUG:onnx2keras:node_params: {'dilations': [1, 1], 'group': 1, 'kernel_shape': [5, 5], 'pads': [0, 0, 0, 0], 'strides': [1, 1], 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name input_0).
+DEBUG:onnx2keras:Check input 1 (name conv1.weight).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:Check input 2 (name conv1.bias).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:conv:Conv with bias
+DEBUG:onnx2keras:conv:2D convolution
+2023-04-03 22:42:50.042444: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2023-04-03 22:42:50.042472: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
+2023-04-03 22:42:50.042501: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (job-project-201375-7631707-wo4z-qrdxm): /proc/driver/nvidia/version does not exist
+2023-04-03 22:42:50.042680: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 6, 24, 24), dtype=tf.float32, name=None), name='11/BiasAdd:0', description="created by layer '11'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Relu
+DEBUG:onnx2keras:node_name: 12
+DEBUG:onnx2keras:node_params: {'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 11).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 6, 24, 24), dtype=tf.float32, name=None), name='12/Relu:0', description="created by layer '12'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: MaxPool
+DEBUG:onnx2keras:node_name: 13
+DEBUG:onnx2keras:node_params: {'kernel_shape': [2, 2], 'pads': [0, 0, 0, 0], 'strides': [2, 2], 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 12).
+DEBUG:onnx2keras:... found all, continue
+WARNING:onnx2keras:maxpool:Unable to use `same` padding. Add ZeroPadding2D layer to fix shapes.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 6, 12, 12), dtype=tf.float32, name=None), name='13/MaxPool:0', description="created by layer '13'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Conv
+DEBUG:onnx2keras:node_name: 14
+DEBUG:onnx2keras:node_params: {'dilations': [1, 1], 'group': 1, 'kernel_shape': [5, 5], 'pads': [0, 0, 0, 0], 'strides': [1, 1], 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 13).
+DEBUG:onnx2keras:Check input 1 (name conv2.weight).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:Check input 2 (name conv2.bias).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:conv:Conv with bias
+DEBUG:onnx2keras:conv:2D convolution
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 16, 8, 8), dtype=tf.float32, name=None), name='14/BiasAdd:0', description="created by layer '14'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Relu
+DEBUG:onnx2keras:node_name: 15
+DEBUG:onnx2keras:node_params: {'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 14).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 16, 8, 8), dtype=tf.float32, name=None), name='15/Relu:0', description="created by layer '15'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: MaxPool
+DEBUG:onnx2keras:node_name: 16
+DEBUG:onnx2keras:node_params: {'kernel_shape': [2, 2], 'pads': [0, 0, 0, 0], 'strides': [2, 2], 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 15).
+DEBUG:onnx2keras:... found all, continue
+WARNING:onnx2keras:maxpool:Unable to use `same` padding. Add ZeroPadding2D layer to fix shapes.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 16, 4, 4), dtype=tf.float32, name=None), name='16/MaxPool:0', description="created by layer '16'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Constant
+DEBUG:onnx2keras:node_name: 17
+DEBUG:onnx2keras:node_params: {'value': array(1), 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> 1
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Constant
+DEBUG:onnx2keras:node_name: 18
+DEBUG:onnx2keras:node_params: {'value': array(-1), 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> -1
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Unsqueeze
+DEBUG:onnx2keras:node_name: 19
+DEBUG:onnx2keras:node_params: {'axes': [0], 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 17).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:unsqueeze:Work with numpy types.
+DEBUG:onnx2keras:Output TF Layer -> [1]
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Unsqueeze
+DEBUG:onnx2keras:node_name: 20
+DEBUG:onnx2keras:node_params: {'axes': [0], 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 18).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:unsqueeze:Work with numpy types.
+DEBUG:onnx2keras:Output TF Layer -> [-1]
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Concat
+DEBUG:onnx2keras:node_name: 21
+DEBUG:onnx2keras:node_params: {'axis': 0, 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 19).
+DEBUG:onnx2keras:Check input 1 (name 20).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:concat:Concat numpy arrays.
+DEBUG:onnx2keras:Output TF Layer -> [ 1 -1]
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Reshape
+DEBUG:onnx2keras:node_name: 22
+DEBUG:onnx2keras:node_params: {'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 16).
+DEBUG:onnx2keras:Check input 1 (name 21).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:reshape:The second argument is numpy array.
+DEBUG:onnx2keras:reshape:The first argument is Keras/tf layer. Apply keras.Reshape.
+DEBUG:onnx2keras:reshape:Target shape :
+DEBUG:onnx2keras:reshape:[-1]
+DEBUG:onnx2keras:reshape:The first argument is Keras/tf layer. Apply keras.Flatten.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 256), dtype=tf.float32, name=None), name='22/Reshape:0', description="created by layer '22'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Gemm
+DEBUG:onnx2keras:node_name: 23
+DEBUG:onnx2keras:node_params: {'alpha': 1.0, 'beta': 1.0, 'transB': 1, 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 22).
+DEBUG:onnx2keras:Check input 1 (name fc1.weight).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:Check input 2 (name fc1.bias).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:gemm:Convert GEMM with bias.
+DEBUG:onnx2keras:gemm:Transposing W matrix.
+DEBUG:onnx2keras:gemm:Input units 256, output units 120.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 120), dtype=tf.float32, name=None), name='23/BiasAdd:0', description="created by layer '23'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Relu
+DEBUG:onnx2keras:node_name: 24
+DEBUG:onnx2keras:node_params: {'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 23).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 120), dtype=tf.float32, name=None), name='24/Relu:0', description="created by layer '24'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Gemm
+DEBUG:onnx2keras:node_name: 25
+DEBUG:onnx2keras:node_params: {'alpha': 1.0, 'beta': 1.0, 'transB': 1, 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 24).
+DEBUG:onnx2keras:Check input 1 (name fc2.weight).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:Check input 2 (name fc2.bias).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:gemm:Convert GEMM with bias.
+DEBUG:onnx2keras:gemm:Transposing W matrix.
+DEBUG:onnx2keras:gemm:Input units 120, output units 84.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 84), dtype=tf.float32, name=None), name='25/BiasAdd:0', description="created by layer '25'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Relu
+DEBUG:onnx2keras:node_name: 26
+DEBUG:onnx2keras:node_params: {'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 25).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 84), dtype=tf.float32, name=None), name='26/Relu:0', description="created by layer '26'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Gemm
+DEBUG:onnx2keras:node_name: 27
+DEBUG:onnx2keras:node_params: {'alpha': 1.0, 'beta': 1.0, 'transB': 1, 'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 26).
+DEBUG:onnx2keras:Check input 1 (name fc3.weight).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:Check input 2 (name fc3.bias).
+DEBUG:onnx2keras:The input not found in layers / model inputs.
+DEBUG:onnx2keras:Found in weights, add as a numpy constant.
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:gemm:Convert GEMM with bias.
+DEBUG:onnx2keras:gemm:Transposing W matrix.
+DEBUG:onnx2keras:gemm:Input units 84, output units 10.
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 10), dtype=tf.float32, name=None), name='27/BiasAdd:0', description="created by layer '27'")
+DEBUG:onnx2keras:######
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Converting ONNX operation
+DEBUG:onnx2keras:type: Relu
+DEBUG:onnx2keras:node_name: output_0
+DEBUG:onnx2keras:node_params: {'change_ordering': False, 'name_policy': 'short'}
+DEBUG:onnx2keras:...
+DEBUG:onnx2keras:Check if all inputs are available:
+DEBUG:onnx2keras:Check input 0 (name 27).
+DEBUG:onnx2keras:... found all, continue
+DEBUG:onnx2keras:Output TF Layer -> KerasTensor(type_spec=TensorSpec(shape=(None, 10), dtype=tf.float32, name=None), name='output_0/Relu:0', description="created by layer 'output_0'")
+Saving saved model...
+2023-04-03 22:42:50.550396: W tensorflow/python/util/util.cc:368] Sets are not currently considered sequences, but this may change in the future, so consider avoiding using them.
+Saving saved model OK
+
+Converting TensorFlow Lite float32 model...
+2023-04-03 22:42:52.651163: W tensorflow/compiler/mlir/lite/python/tf_tfl_flatbuffer_helpers.cc:363] Ignored output_format.
+2023-04-03 22:42:52.651197: W tensorflow/compiler/mlir/lite/python/tf_tfl_flatbuffer_helpers.cc:366] Ignored drop_control_dependency.
+2023-04-03 22:42:52.652091: I tensorflow/cc/saved_model/reader.cc:43] Reading SavedModel from: /tmp/tmpkcs0pxcj
+2023-04-03 22:42:52.654839: I tensorflow/cc/saved_model/reader.cc:107] Reading meta graph with tags { serve }
+2023-04-03 22:42:52.654871: I tensorflow/cc/saved_model/reader.cc:148] Reading SavedModel debug info (if present) from: /tmp/tmpkcs0pxcj
+2023-04-03 22:42:52.664761: I tensorflow/cc/saved_model/loader.cc:210] Restoring SavedModel bundle.
+2023-04-03 22:42:52.715991: I tensorflow/cc/saved_model/loader.cc:194] Running initialization op on SavedModel bundle at path: /tmp/tmpkcs0pxcj
+2023-04-03 22:42:52.730687: I tensorflow/cc/saved_model/loader.cc:283] SavedModel load for tags { serve }; Status: success: OK. Took 78599 microseconds.
+2023-04-03 22:42:52.752737: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:237] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+Estimated count of arithmetic ops: 0.572 M  ops, equivalently 0.286 M  MACs
+2023-04-03 22:42:52.797172: I tensorflow/compiler/mlir/lite/flatbuffer_export.cc:1962] Estimated count of arithmetic ops: 0.572 M  ops, equivalently 0.286 M  MACs
+
+Converting TensorFlow Lite float32 model OK
+
+Converting TensorFlow Lite int8 model...
+2023-04-03 22:42:53.983976: W tensorflow/compiler/mlir/lite/python/tf_tfl_flatbuffer_helpers.cc:363] Ignored output_format.
+2023-04-03 22:42:53.984007: W tensorflow/compiler/mlir/lite/python/tf_tfl_flatbuffer_helpers.cc:366] Ignored drop_control_dependency.
+2023-04-03 22:42:53.984233: I tensorflow/cc/saved_model/reader.cc:43] Reading SavedModel from: /tmp/tmpqygecbwg
+2023-04-03 22:42:53.986391: I tensorflow/cc/saved_model/reader.cc:107] Reading meta graph with tags { serve }
+2023-04-03 22:42:53.986423: I tensorflow/cc/saved_model/reader.cc:148] Reading SavedModel debug info (if present) from: /tmp/tmpqygecbwg
+2023-04-03 22:42:53.998176: I tensorflow/cc/saved_model/loader.cc:210] Restoring SavedModel bundle.
+2023-04-03 22:42:54.024644: I tensorflow/cc/saved_model/loader.cc:194] Running initialization op on SavedModel bundle at path: /tmp/tmpqygecbwg
+2023-04-03 22:42:54.037518: I tensorflow/cc/saved_model/loader.cc:283] SavedModel load for tags { serve }; Status: success: OK. Took 53286 microseconds.
+2023-04-03 22:42:54.102720: I tensorflow/compiler/mlir/lite/flatbuffer_export.cc:1962] Estimated count of arithmetic ops: 0.572 M  ops, equivalently 0.286 M  MACs
+
+Estimated count of arithmetic ops: 0.572 M  ops, equivalently 0.286 M  MACs
+fully_quantize: 0, inference_type: 6, input_inference_type: 9, output_inference_type: 9
+2023-04-03 22:43:01.912418: I tensorflow/compiler/mlir/lite/flatbuffer_export.cc:1962] Estimated count of arithmetic ops: 0.572 M  ops, equivalently 0.286 M  MACs
+
+Estimated count of arithmetic ops: 0.572 M  ops, equivalently 0.286 M  MACs
+Converting TensorFlow Lite int8 model OK
+
+Profiling model...
+Scheduling job in cluster...
+Container image pulled!
+Job started
+Loading data for profiling...
+Loading data for profiling OK
+
+Creating embeddings...
+WARN: Creating embeddings failed:  Default MaxPoolingOp only supports NHWC on device type CPU
+	 [[node sequential/model/13/MaxPool
+ (defined at /app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/util/tf_stack.py:193)
+]] [Op:__inference_predict_function_1175]
+
+Errors may have originated from an input operation.
+Input Source operations connected to node sequential/model/13/MaxPool:
+In[0] sequential/model/12/Relu:
+
+Operation defined at: (most recent call last)
+>>>   File "/home/profile.py", line 330, in <module>
+>>>     main_function()
+>>> 
+>>>   File "/home/profile.py", line 140, in main_function
+>>>     ei_tensorflow.embeddings.create_embeddings(
+>>> 
+>>>   File "/app/./resources/libraries/ei_tensorflow/embeddings.py", line 36, in create_embeddings
+>>>     X_pred = pred_from_savedmodel(model, SHAPE, rows, x_file)
+>>> 
+>>>   File "/app/./resources/libraries/ei_tensorflow/embeddings.py", line 70, in pred_from_savedmodel
+>>>     embeddings_len = model.predict(X_0).shape[1]
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 64, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/training.py", line 1789, in predict
+>>>     tmp_batch_outputs = self.predict_function(iterator)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/util/traceback_utils.py", line 150, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 910, in __call__
+>>>     result = self._call(*args, **kwds)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 958, in _call
+>>>     self._initialize(args, kwds, add_initializers_to=initializers)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 780, in _initialize
+>>>     self._stateful_fn._get_concrete_function_internal_garbage_collected(  # pylint: disable=protected-access
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 3157, in _get_concrete_function_internal_garbage_collected
+>>>     graph_function, _ = self._maybe_define_function(args, kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 3557, in _maybe_define_function
+>>>     graph_function = self._create_graph_function(args, kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 3392, in _create_graph_function
+>>>     func_graph_module.func_graph_from_py_func(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/framework/func_graph.py", line 1143, in func_graph_from_py_func
+>>>     func_outputs = python_func(*func_args, **func_kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 672, in wrapped_fn
+>>>     out = weak_wrapped_fn().__wrapped__(*args, **kwds)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/framework/func_graph.py", line 1118, in autograph_handler
+>>>     return autograph.converted_call(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/training.py", line 1621, in predict_function
+>>>     return step_function(self, iterator)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/training.py", line 1611, in step_function
+>>>     outputs = model.distribute_strategy.run(run_step, args=(data,))
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/distribute/distribute_lib.py", line 1316, in run
+>>>     return self._extended.call_for_each_replica(fn, args=args, kwargs=kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/distribute/distribute_lib.py", line 2892, in call_for_each_replica
+>>>     return self._call_for_each_replica(fn, args, kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/distribute/distribute_lib.py", line 3695, in _call_for_each_replica
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/training.py", line 1604, in run_step
+>>>     outputs = model.predict_step(data)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/training.py", line 1572, in predict_step
+>>>     return self(x, training=False)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 64, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/base_layer.py", line 1083, in __call__
+>>>     outputs = call_fn(inputs, *args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 92, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/sequential.py", line 373, in call
+>>>     return super(Sequential, self).call(inputs, training=training, mask=mask)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/functional.py", line 451, in call
+>>>     return self._run_internal_graph(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/functional.py", line 589, in _run_internal_graph
+>>>     outputs = node.layer(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 64, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/base_layer.py", line 1083, in __call__
+>>>     outputs = call_fn(inputs, *args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 92, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/functional.py", line 451, in call
+>>>     return self._run_internal_graph(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/functional.py", line 589, in _run_internal_graph
+>>>     outputs = node.layer(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 64, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/engine/base_layer.py", line 1083, in __call__
+>>>     outputs = call_fn(inputs, *args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 92, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/keras/layers/pooling.py", line 357, in call
+>>>     outputs = self.pool_function(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/util/traceback_utils.py", line 150, in error_handler
+>>>     return fn(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/util/dispatch.py", line 1096, in op_dispatch_handler
+>>>     return dispatch_target(*args, **kwargs)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/ops/nn_ops.py", line 4865, in max_pool
+>>>     return gen_nn_ops.max_pool(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/ops/gen_nn_ops.py", line 5387, in max_pool
+>>>     _, _, _op, _outputs = _op_def_library._apply_op_helper(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/framework/op_def_library.py", line 744, in _apply_op_helper
+>>>     op = g._create_op_internal(op_type_name, inputs, dtypes=None,
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/framework/func_graph.py", line 689, in _create_op_internal
+>>>     return super(FuncGraph, self)._create_op_internal(  # pylint: disable=protected-access
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/framework/ops.py", line 3697, in _create_op_internal
+>>>     ret = Operation(
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/framework/ops.py", line 2101, in __init__
+>>>     self._traceback = tf_stack.extract_stack_for_node(self._c_op)
+>>> 
+>>>   File "/app/keras/.venv/lib/python3.8/site-packages/tensorflow/python/util/tf_stack.py", line 193, in extract_stack_for_node
+>>>     return _tf_stack.extract_stack_for_node(
+>>> 
+
+Calculating performance metrics...
+Profiling float32 model...
+Profiling int8 model...
+Profiling 54% done
+
+Model training complete
+
+Job completed
