@@ -42,6 +42,10 @@ Y_train = np.load(os.path.join(args.data_directory, 'Y_split_train.npy'))
 X_test = np.load(os.path.join(args.data_directory, 'X_split_test.npy'), mmap_mode='r')
 Y_test = np.load(os.path.join(args.data_directory, 'Y_split_test.npy'))
 
+
+X_test = X_test.reshape(12000,1,28,28)
+X_train = X_train.reshape(48000,1,28,28)
+
 classes = Y_train.shape[1]
 
 d = X_train[0]
@@ -105,21 +109,21 @@ criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0.9, 0.999))
 
 # convert to pyTorch float tensors
-# X_train = torch.FloatTensor(X_train)
-# Y_train = torch.FloatTensor(Y_train)
-# X_test = torch.FloatTensor(X_test)
-# Y_test = torch.FloatTensor(Y_test)
+X_train = torch.FloatTensor(X_train)
+Y_train = torch.FloatTensor(Y_train)
+X_test = torch.FloatTensor(X_test)
+Y_test = torch.FloatTensor(Y_test)
 
 # create data loaders
-# train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
-# test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
+train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
+test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
 
-train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
-test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
-print("!!!")
-print(type(test_dataset))
-train_dataloader = DataLoader(train_dataset, batch_size=256)
-test_dataloader = DataLoader(test_dataset, batch_size=256)
+# train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
+# test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
+# print("!!!")
+# train_dataloader = DataLoader(train_dataset, batch_size=256)
+# test_dataloader = DataLoader(test_dataset, batch_size=256)
+
 
 
 # <<MODIFIED>>
@@ -135,17 +139,17 @@ for epoch in range(args.epochs):
     # <<MODIFIED>>
     model.train()
 
-    d = train_dataset[0]
-    i, l = d
-    print("my data input shape: ", end="")
-    print(i.shape)
-    print(type(i))
+    # d = train_dataset[0]
+    # i, l = d
+    # print("my data input shape: ", end="")
+    # print(i.shape)
+    # print(type(i))
     # for index in range(len(i[0])):
     #     print("line: " + str(index) + " ", end="")
     #     for indexj in range(len(i[0][index])):
     #         print("{:.3f}".format(i[0][index][indexj].item()), end=" ")
     #     print()
-    d = i.reshape(28,28,1)
+    # d = i.reshape(28,28,1)
     # for indexi in range(len(d)):
     #     print("line: " + str(indexi), end=" ")
     #     for indexj in range(len(d[indexi])):
@@ -162,8 +166,8 @@ for epoch in range(args.epochs):
         # forward + backward + optimize
         outputs = model(inputs.float())
         # outputs = model(inputs)
-        loss = criterion(outputs, labels.long())
-        # loss = criterion(outputs, labels)
+        # loss = criterion(outputs, labels.long())
+        loss = criterion(outputs, labels)
 
         loss.backward()
         sgd.step()
