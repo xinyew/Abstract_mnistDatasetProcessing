@@ -99,8 +99,8 @@ X_test = torch.FloatTensor(X_test)
 Y_test = torch.FloatTensor(Y_test)
 
 # create data loaders
-train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=256)
-test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=256)
+train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
+test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
 
 # <<MODIFIED>>
 sgd = SGD(model.parameters(), lr=1e-1)
