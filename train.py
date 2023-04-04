@@ -43,8 +43,8 @@ X_test = np.load(os.path.join(args.data_directory, 'X_split_test.npy'), mmap_mod
 Y_test = np.load(os.path.join(args.data_directory, 'Y_split_test.npy'))
 
 
-X_test = X_test.reshape(12000,1,28,28)
-X_train = X_train.reshape(48000,1,28,28)
+# X_test = X_test.permute(12000,1,28,28)
+# X_train = X_train.permute(48000,1,28,28)
 
 classes = Y_train.shape[1]
 
@@ -68,6 +68,8 @@ class Model(Module):
         self.relu5 = nn.ReLU()
 
     def forward(self, x):
+        xx = x
+        x = x.permute(0,3,1,2)
         y = self.conv1(x)
         y = self.relu1(y)
         y = self.pool1(y)
