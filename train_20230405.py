@@ -91,20 +91,27 @@ model = Model()
 criterion = nn.CrossEntropyLoss()
 # optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0.9, 0.999))
 
-# convert to pyTorch float tensors
-X_train = torch.FloatTensor(X_train)
-Y_train = torch.FloatTensor(Y_train)
-X_test = torch.FloatTensor(X_test)
-Y_test = torch.FloatTensor(Y_test)
-
-# create data loaders
-train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
-test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
 
 train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
 test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
 train_dataloader = DataLoader(train_dataset, batch_size=16)
 test_dataloader = DataLoader(test_dataset, batch_size=16)
+
+# !!!!!!!
+# itr = iter(test_dataloader)
+# # get the inputs; data is a list of [inputs, labels]
+# for i in range(3):
+#     inputs, labels = next(itr)
+#     for j in range(16):
+#         for ll in inputs[j][0]:
+#             for lll in ll:
+#                 print("{:.3f}".format(lll), end=" ")
+#             print()
+#         print(inputs[j].flatten().tolist())
+#         print(labels.tolist()[j])
+#         print()
+#         print()
+#         print()
 
 # <<MODIFIED>>
 sgd = SGD(model.parameters(), lr=1e-1)
