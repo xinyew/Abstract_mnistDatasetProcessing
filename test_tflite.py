@@ -24,12 +24,6 @@ class TensorflowLiteClassificationModel:
         return self.run(image)
 
     def run(self, image):
-        """
-        args:
-          image: a (1, image_size, image_size, 3) np.array
-
-        Returns list of [Label, Probability], of type List<str, float>
-        """
 
         self.interpreter.set_tensor(self._input_details[0]["index"], image)
         self.interpreter.invoke()

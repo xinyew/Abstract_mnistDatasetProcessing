@@ -101,10 +101,10 @@ Y_test = torch.FloatTensor(Y_test)
 train_dataloader = DataLoader(TensorDataset(X_train, Y_train), batch_size=16)
 test_dataloader = DataLoader(TensorDataset(X_test, Y_test), batch_size=16)
 
-train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
-test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
-train_dataloader = DataLoader(train_dataset, batch_size=16)
-test_dataloader = DataLoader(test_dataset, batch_size=16)
+# train_dataset = mnist.MNIST(root='./train', train=True, transform=ToTensor())
+# test_dataset = mnist.MNIST(root='./test', train=False, transform=ToTensor())
+# train_dataloader = DataLoader(train_dataset, batch_size=16)
+# test_dataloader = DataLoader(test_dataset, batch_size=16)
 
 # <<MODIFIED>>
 sgd = SGD(model.parameters(), lr=1e-1)
