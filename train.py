@@ -47,6 +47,7 @@ Y_test = np.load(os.path.join(args.data_directory, 'Y_split_test.npy'))
 # X_train = X_train.permute(48000,1,28,28)
 
 classes = Y_train.shape[1]
+print(Y_train.shape)
 
 MODEL_INPUT_SHAPE = X_train.shape[1:]
 
@@ -68,7 +69,7 @@ class Model(Module):
         self.relu5 = nn.ReLU()
 
     def forward(self, x):
-        # x = x.permute(0,3,1,2)
+        x = x.permute(0,3,1,2)
         y = self.conv1(x)
         y = self.relu1(y)
         y = self.pool1(y)
@@ -186,14 +187,14 @@ print('')
 disable_per_channel_quantization = False
 
 # saved_model = pytorch_to_savedmodel(model, MODEL_INPUT_SHAPE)
-saved_model = pytorch_to_savedmodel(model, (1,28,28))
+saved_model = pytorch_to_savedmodel(model, (28,28,1))
 
 # Save the model to disk
 save_saved_model(saved_model, args.out_directory)
 
 # Create tflite files (f32 / i8)
 validation_dataset = tf.data.Dataset.from_tensor_slices((X_test, Y_test))
-convert_to_tf_lite(saved_model, args.out_directory, validation_dataset, (1,28,28),
+convert_to_tf_lite(saved_model, args.out_directory, validation_dataset, (28,28,1),
     'model.tflite', 'model_quantized_int8_io.tflite', disable_per_channel_quantization)
 #convert_to_tf_lite(saved_model, args.out_directory, validation_dataset, MODEL_INPUT_SHAPE,
 #    'model.tflite', 'model_quantized_int8_io.tflite', disable_per_channel_quantization)
